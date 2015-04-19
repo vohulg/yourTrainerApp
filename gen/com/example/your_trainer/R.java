@@ -1648,12 +1648,13 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f05002e;
         public static final int action_mode_bar_stub=0x7f05002d;
         public static final int action_mode_close_button=0x7f050020;
-        public static final int action_settings=0x7f050043;
+        public static final int action_settings=0x7f050045;
         public static final int activity_chooser_view_content=0x7f050021;
         public static final int always=0x7f05000d;
         public static final int beginning=0x7f050012;
-        public static final int btChooseComplex=0x7f050040;
-        public static final int btnStart=0x7f050042;
+        public static final int btChooseComplex=0x7f050042;
+        public static final int btnStart=0x7f050044;
+        public static final int button1=0x7f05003f;
         public static final int checkbox=0x7f050029;
         public static final int collapseActionView=0x7f05000f;
         public static final int decor_content_parent=0x7f05002f;
@@ -1696,9 +1697,10 @@ containing a value of this type.
         public static final int split_action_bar=0x7f050019;
         public static final int submit_area=0x7f05003c;
         public static final int tabMode=0x7f050003;
+        public static final int textView1=0x7f050040;
         public static final int title=0x7f050027;
-        public static final int tvAppName=0x7f05003f;
-        public static final int tvChoosedComplex=0x7f050041;
+        public static final int tvAppName=0x7f050041;
+        public static final int tvChoosedComplex=0x7f050043;
         public static final int up=0x7f050016;
         public static final int useLogo=0x7f050005;
         public static final int withText=0x7f05000e;
@@ -1753,8 +1755,9 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030014;
         public static final int abc_search_view=0x7f030015;
         public static final int abc_simple_dropdown_hint=0x7f030016;
-        public static final int activity_atrainer=0x7f030017;
-        public static final int support_simple_spinner_dropdown_item=0x7f030018;
+        public static final int acomplexlist=0x7f030017;
+        public static final int activity_atrainer=0x7f030018;
+        public static final int support_simple_spinner_dropdown_item=0x7f030019;
     }
     public static final class menu {
         public static final int atrainer=0x7f0c0000;

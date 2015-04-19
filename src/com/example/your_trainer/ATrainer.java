@@ -4,14 +4,37 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 
-public class ATrainer extends ActionBarActivity {
+public class ATrainer extends ActionBarActivity implements OnClickListener{
+	private Button btnChooseComplex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrainer);
+        
+        btnChooseComplex = (Button)findViewById(R.id.btChooseComplex);
+        btnChooseComplex.setOnClickListener(this);
+        
+        
+        
+        
+    }
+    
+    @Override
+    public void onClick(View v)
+    {
+    	switch(v.getId())
+    	{
+    	case R.id.btChooseComplex: /*setContentView(R.layout.aComplexList);*/ break;
+    	default: break;
+    	
+    	}
+    	
     }
 
 
