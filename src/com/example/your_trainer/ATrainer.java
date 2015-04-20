@@ -1,7 +1,9 @@
 package com.example.your_trainer;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +32,12 @@ public class ATrainer extends ActionBarActivity implements OnClickListener{
     {
     	switch(v.getId())
     	{
-    	case R.id.btChooseComplex: /*setContentView(R.layout.aComplexList);*/ break;
+    	case R.id.btChooseComplex:
+    		Intent intent = new Intent(this, AComplexList.class) ;
+    		startActivity(intent);
+    		break;
+    		
+    	case R.id.btnAdd: break;
     	default: break;
     	
     	}
@@ -41,7 +48,7 @@ public class ATrainer extends ActionBarActivity implements OnClickListener{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.atrainer, menu);
+        //getMenuInflater().inflate(R.menu.atrainer, menu);
         return true;
     }
 
