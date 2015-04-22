@@ -1,7 +1,9 @@
 package com.example.your_trainer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,10 +16,13 @@ import android.widget.Button;
 public class ATrainer extends ActionBarActivity implements OnClickListener{
 	private Button btnChooseComplex;
 
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrainer);
+        
+        //android.app.ActionBar actBar = getActionBar();
+        //actBar.hide();
         
         btnChooseComplex = (Button)findViewById(R.id.btChooseComplex);
         btnChooseComplex.setOnClickListener(this);

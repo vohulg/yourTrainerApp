@@ -21,6 +21,7 @@ public class AComplexList extends Activity implements OnClickListener {
 	
 	final String LOG_TAG = "vh_tag";
 	DBHelper dbhelper;
+	SQLiteDatabase dataBase;
 	EditText edTxt1;
 	EditText edTxt2;
 	Button btnAdd;
@@ -39,7 +40,12 @@ public class AComplexList extends Activity implements OnClickListener {
 	        btnShow =  (Button)findViewById(R.id.btnRead);
 	        btnClear =  (Button)findViewById(R.id.btnClear);
 	        
-	        dbhelper = new DBHelper(this); 
+	        this.deleteDatabase("dbComplexList");
+	       // this.deleteDatabase("complexList");
+	        
+	        dbhelper = new DBHelper(this, "dbComplexListNew"); 	        
+	        SQLiteDatabase dataBase = dbhelper.getWritableDatabase();
+
 	        
 	        btnAdd.setOnClickListener(this);
 	        btnShow.setOnClickListener(this);
@@ -49,11 +55,14 @@ public class AComplexList extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
+		//dbhelper = new DBHelper(this);
 		ContentValues cv = new ContentValues();
-		SQLiteDatabase db = dbhelper.getWritableDatabase();
+		//SQLiteDatabase db = dbhelper.getWritableDatabase();
 		
 		String name = edTxt1.getText().toString();
 		String email = edTxt1.getText().toString();
+		
+		String tableName = "tbComplexList";
 		
 		switch(v.getId())
     	{    	   		
@@ -62,13 +71,13 @@ public class AComplexList extends Activity implements OnClickListener {
 	    		cv.put("name", name);
 	    		cv.put("email", email);
 	    		
-	    		long rowId = db.insert("tbComplexList", null, cv);
+	    		long rowId = dataBase.insert(tableName, null, cv);
 	    		Log.d(LOG_TAG, "---Inserted to table rowid-----" + rowId);	
 	    		
 	    		
 	    		break;
 	    	case R.id.btnRead: // чтение из таблицы результата запроса 
-	    		Cursor c =  db.query("tbComplexList", null, null, null, null, null, null);
+	    		Cursor c =  dataBase.query(tableName, null, null, null, null, null, null);
 	    		if(c.moveToFirst())
 		    		{
 		    			int Colid = c.getColumnIndex("id");
@@ -92,7 +101,7 @@ public class AComplexList extends Activity implements OnClickListener {
 	    		;break;
 	    	case R.id.btnClear: 
 	    		
-	    		db.delete("tbComplexList", null, null);
+	    		dataBase.delete(tableName, null, null);
 	    		
 	    		break;
 	    	default: 
@@ -123,19 +132,82 @@ public class AComplexList extends Activity implements OnClickListener {
 class DBHelper extends SQLiteOpenHelper
 {
 
-	public DBHelper(Context context) {
-		super(context, "dbComplexList", null, 1);
+	final private String tbComplex = "tbComplexes";
+	final private String tbExercise = "tbExercises";
+	
+	public DBHelper(Context context, String dbName) {
+		super(context, dbName, null, 1);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.d("vh", "----Create data base---");
+		
+		
 		db.execSQL("create table tbComplexList ("
 				+ "id integer primary key autoincrement,"
 				+ "name text,"
 				+"email text" + ");");
 				
+		
+		/*
+		db.execSQL("create table tbComplexes ("
+				+ "id integer primary key autoincrement,"
+				+ "comp_name text,"
+				+ "comp_custom_music text,"
+				+ "comp_totaltime text,"
+				+ "comp_repeat integer,"
+				+"comp_default_music text" + ");");
+		
+		db.execSQL("create table tbExercises ("
+				+ "id integer primary key autoincrement,"
+				+ "exes_name text,"
+				+ "exes_complid integer,"
+				+ "exes_descr text,"
+				+ "exes_photourl text,"
+				+ "exes_timeinsec integer,"
+				+ "exes_order integer,"
+				+"comp_istabata integer" + ");");
+				
+				*/
+		
+		fillDB(db);
+		
+	}
+
+	private void fillDB(SQLiteDatabase db)
+	{
+		db.execSQL("insert into tbComplexes ('comp_name') values ('pushup')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('jumping')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('relax')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('kidExercis')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding')");
+
+		
+		db.execSQL("insert into tbExercises ('exes_name', " +
+				"'exec_complid'," +
+				" 'exec_descr', " +
+				"'exes_photourl'" +
+				"'exes_timeinsec'" +
+				"'exes_order'" +
+				"'exes_istabata'" +
+				")" +
+				" values ('pushup')");
+
+		/*
+		 * + "id integer primary key autoincrement,"
+				+ "exes_name text,"
+				+ "exes_complid integer,"
+				+ "exes_descr text,"
+				+ "exes_photourl text,"
+				+ "exes_timeinsec integer,"
+				+ "exes_order integer,"
+				+"comp_istabata integer
+		 * 
+		 * */
+		//db.execSQL("insert into tbComplexList ('name') values ('konstantin')");
+
 		
 	}
 
