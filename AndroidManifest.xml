@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="AComplexList"></activity>
+        <activity android:name="AExercise"></activity>
     </application>
 
 </manifest>

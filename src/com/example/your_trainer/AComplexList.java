@@ -1,19 +1,20 @@
 package com.example.your_trainer;
 
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 
 
 
@@ -21,137 +22,135 @@ public class AComplexList extends Activity implements OnClickListener {
 	
 	final String LOG_TAG = "vh_tag";
 	DBHelper dbhelper;
-	SQLiteDatabase dataBase;
-	EditText edTxt1;
-	EditText edTxt2;
-	Button btnAdd;
-	Button btnShow;
-	Button btnClear;
+	SQLiteDatabase dataBase;	
+	 ListView lvMain;
+	 Button btnBack;
+	 String ArrComplName[];
 	
-	
-	 @Override
+       @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.acomplexlist);          
+	        setContentView(R.layout.acomplexlist);	
 	        
-	        edTxt1 = (EditText)findViewById(R.id.edText1);
-	        edTxt2 = (EditText)findViewById(R.id.edText2);
-	        btnAdd =  (Button)findViewById(R.id.btnAdd);
-	        btnShow =  (Button)findViewById(R.id.btnRead);
-	        btnClear =  (Button)findViewById(R.id.btnClear);
+	        //0. Set event for button
+	        btnBack = (Button)findViewById(R.id.btnBack);
+	        btnBack.setOnClickListener(this);
+	       
+	        // 1. create Database if not created ealier
+	        this.deleteDatabase("dbTrainer"); // for debug
+	        dbhelper = new DBHelper(this, "dbTrainer"); 	        
+	        dataBase = dbhelper.getWritableDatabase();
 	        
-	        this.deleteDatabase("dbComplexList");
-	       // this.deleteDatabase("complexList");
+	        // 2. Fill array of name complexes from database	        
+	        ArrComplName = getComplexName();
 	        
-	        dbhelper = new DBHelper(this, "dbComplexListNew"); 	        
-	        SQLiteDatabase dataBase = dbhelper.getWritableDatabase();
-
+	       // 2.1 close database
+	        dbhelper.close();
+	        dataBase.close();
 	        
-	        btnAdd.setOnClickListener(this);
-	        btnShow.setOnClickListener(this);
-	        btnClear.setOnClickListener(this);
+	        
+	        // 3. Show List View
+	        lvMain = (ListView)findViewById(R.id.lvComplexes);
+	        lvMain.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	        	        
+	        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+	        		this, android.R.layout.simple_list_item_single_choice, ArrComplName );
+	        lvMain.setAdapter(adapter); 
+	        
+	        
+	      
 	    }
+
+       
+	private  String[] getComplexName()
+	{	
+		String column[] = {"id", "comp_name"};
+		
+		Cursor c =  dataBase.query("tbComplexes", column, null, null, null, null, null);
+		int rows = c.getCount();
+		
+		if (rows == 0)
+		{
+			Log.d(LOG_TAG, "0 rows");
+			String[] noRow = {"norows"};
+			Log.d(LOG_TAG, "0 rows");	
+			return noRow;
+		}
+		
+		int ColName = c.getColumnIndex("comp_name");
+		int id = c.getColumnIndex("id");
+		String[] arrayNameComplex = new String[rows];
+		
+		c.moveToFirst();
+		
+		for (int i =0; i < rows; i++)
+		{
+			arrayNameComplex[i] =  c.getString(ColName);
+			c.moveToNext();
+			
+		}
+		
+		c.close();
+		
+		
+				
+		return arrayNameComplex;
+		
+	}
 
 	@Override
 	public void onClick(View v) {
 		
-		//dbhelper = new DBHelper(this);
-		ContentValues cv = new ContentValues();
-		//SQLiteDatabase db = dbhelper.getWritableDatabase();
-		
-		String name = edTxt1.getText().toString();
-		String email = edTxt1.getText().toString();
-		
-		String tableName = "tbComplexList";
-		
 		switch(v.getId())
-    	{    	   		
-	    	case R.id.btnAdd: 
-	    		Log.d(LOG_TAG, "---Insert to db-----");
-	    		cv.put("name", name);
-	    		cv.put("email", email);
-	    		
-	    		long rowId = dataBase.insert(tableName, null, cv);
-	    		Log.d(LOG_TAG, "---Inserted to table rowid-----" + rowId);	
-	    		
-	    		
-	    		break;
-	    	case R.id.btnRead: // чтение из таблицы результата запроса 
-	    		Cursor c =  dataBase.query(tableName, null, null, null, null, null, null);
-	    		if(c.moveToFirst())
-		    		{
-		    			int Colid = c.getColumnIndex("id");
-		    			int ColName = c.getColumnIndex("name");
-		    			int ColEmail = c.getColumnIndex("email");   	
-		    			
-		    			do  {
-		    				String name1 = c.getString(ColName);
-			    			String email1 = c.getString(ColEmail);
-			    			Log.d(LOG_TAG, "Name =  " + name1 + "Email = " + email1 + "\n");
-		    				
-		    			} while(c.moveToNext());
-		    		}
-		    			
-		    			else Log.d(LOG_TAG, "0 rows");		    			
-		    			c.close();
-	    		
-	    		
-	    		
-	    		
-	    		;break;
-	    	case R.id.btnClear: 
-	    		
-	    		dataBase.delete(tableName, null, null);
-	    		
-	    		break;
-	    	default: 
-	    		break;
-	    	
-    	}
+		{
+		  case R.id.btnBack : 			
+			  sendComplexName(); // send choosed complex name to main activity 
+			  break;
 		
-		dbhelper.close();
+		}
+		
+		
 		
 	}
 
-	private void clearDb() {
-		// TODO Auto-generated method stub
+
+	private void sendComplexName()
+	{
+		 // Log.d(LOG_TAG, "Choosed " + ArrComplName[lvMain.getCheckedItemPosition()]);
+		
+		String choosedComplex =  ArrComplName[lvMain.getCheckedItemPosition()];
+		Intent intent = new Intent();
+		intent.putExtra("extra_complexName", choosedComplex);
+		intent.putExtra("extra_complexName_id", "44");
+		setResult(RESULT_OK, intent);
+		finish();
+		
 		
 	}
 
-	private void readFromDB() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void saveToDB() {
-		
-	}
+	
 
 }
 
 class DBHelper extends SQLiteOpenHelper
 {
-
+	final String LOG_TAG = "vh_tag";
+	private String DBName;
 	final private String tbComplex = "tbComplexes";
 	final private String tbExercise = "tbExercises";
 	
 	public DBHelper(Context context, String dbName) {
 		super(context, dbName, null, 1);
+		DBName = dbName;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.d("vh", "----Create data base---");
+		Log.d(LOG_TAG, "----Create data base---" + DBName);
 		
 		
-		db.execSQL("create table tbComplexList ("
-				+ "id integer primary key autoincrement,"
-				+ "name text,"
-				+"email text" + ");");
-				
-		
-		/*
+		Log.d(LOG_TAG, "----Create table---tbComplexes");
 		db.execSQL("create table tbComplexes ("
 				+ "id integer primary key autoincrement,"
 				+ "comp_name text,"
@@ -160,6 +159,7 @@ class DBHelper extends SQLiteOpenHelper
 				+ "comp_repeat integer,"
 				+"comp_default_music text" + ");");
 		
+		Log.d(LOG_TAG, "----Create table---tbExercises");
 		db.execSQL("create table tbExercises ("
 				+ "id integer primary key autoincrement,"
 				+ "exes_name text,"
@@ -168,11 +168,12 @@ class DBHelper extends SQLiteOpenHelper
 				+ "exes_photourl text,"
 				+ "exes_timeinsec integer,"
 				+ "exes_order integer,"
-				+"comp_istabata integer" + ");");
+				+"exes_istabata integer" + ");");
 				
-				*/
+				
 		
 		fillDB(db);
+		Log.d(LOG_TAG, "----Tables filled with data");
 		
 	}
 
@@ -183,17 +184,55 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("insert into tbComplexes ('comp_name') values ('relax')");
 		db.execSQL("insert into tbComplexes ('comp_name') values ('kidExercis')");
 		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('arrrrrrr')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('pushup1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('jumping1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('relax1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('kidExercis1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('arrrrrrr1')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('pushup2')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('jumping2')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('relax2')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('kidExercis2')");
+		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding2')");
+		
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+				                     "values( 'jumping1', '1', 'from place jump and spring', '/jump.gif', '30', '1',  '0' )");
+		
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping1', '1', 'from place jump and spring', '/jump1.gif', '30', '1',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping2', '1', 'from place jump and spring', '/jump2.gif', '30', '2',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping3', '1', 'from place jump and spring', '/jump3.gif', '30', '3',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping4', '1', 'from place jump and spring', '/jump4.gif', '30', '4',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping5', '1', 'from place jump and spring', '/jump5.gif', '30', '5',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping6', '1', 'from place jump and spring', '/jump6.gif', '30', '6',  '0' )");
+
+		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
+                "values( 'jumping7', '1', 'from place jump and spring', '/jump7.gif', '30', '7',  '0' )");
 
 		
+		/*
 		db.execSQL("insert into tbExercises ('exes_name', " +
-				"'exec_complid'," +
-				" 'exec_descr', " +
+				"'exes_complid'," +
+				" 'exes_descr', " +
 				"'exes_photourl'" +
 				"'exes_timeinsec'" +
 				"'exes_order'" +
 				"'exes_istabata'" +
 				")" +
-				" values ('pushup')");
+				" values ('pushup', '' ");
+				*/
 
 		/*
 		 * + "id integer primary key autoincrement,"
