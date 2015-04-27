@@ -88,7 +88,7 @@ public class ATrainer extends Activity implements OnClickListener{
 		Log.d(LOG_TAG, "requestCode= " + String.valueOf(requestCode) + " resultCode = " + String.valueOf(resultCode) );
 
     	String choosedComplexName = data.getStringExtra("extra_complexName");
-    	String choosedComplexName_id = data.getStringExtra("extra_complexName_id");
+    	String choosedComplexName_id = data.getStringExtra("extra_complexId");
     	tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexName_id);    	
     	
     }  
