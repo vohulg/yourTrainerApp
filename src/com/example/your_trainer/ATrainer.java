@@ -17,6 +17,9 @@ public class ATrainer extends Activity implements OnClickListener{
 	
 	final String LOG_TAG = "vh_tag";
 	TextView tvChoosedName;
+	
+	String choosedComplexName = null;
+	String choosedComplexId = null;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,11 @@ public class ATrainer extends Activity implements OnClickListener{
     }
     
     private void startExercice() 
-    {
+    {   	
     	Intent intent1 = new Intent(this, AExercise.class) ;
-    			startActivity(intent1);
+    	intent1.putExtra("nameChoosedCompex", choosedComplexName);
+    	intent1.putExtra("nameChoosedId", choosedComplexId);   	
+    	startActivity(intent1);
 		
 	}
 
@@ -87,9 +92,9 @@ public class ATrainer extends Activity implements OnClickListener{
     {
 		Log.d(LOG_TAG, "requestCode= " + String.valueOf(requestCode) + " resultCode = " + String.valueOf(resultCode) );
 
-    	String choosedComplexName = data.getStringExtra("extra_complexName");
-    	String choosedComplexName_id = data.getStringExtra("extra_complexId");
-    	tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexName_id);    	
+    	 choosedComplexName = data.getStringExtra("extra_complexName");
+    	 choosedComplexId = data.getStringExtra("extra_complexId");   	
+    	tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);    	
     	
     }  
     
