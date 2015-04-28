@@ -1700,11 +1700,11 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003d;
         public static final int tabMode=0x7f09000c;
-        public static final int textView1=0x7f090041;
         public static final int title=0x7f090028;
         public static final int tvAppName=0x7f090043;
         public static final int tvChoosedComplex=0x7f090045;
         public static final int tvDescr=0x7f090047;
+        public static final int tvExerName=0x7f090041;
         public static final int tvName=0x7f09004a;
         public static final int tvTimer=0x7f090048;
         public static final int up=0x7f090001;
