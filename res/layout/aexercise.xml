@@ -18,17 +18,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <WebView
-            android:id="@+id/webView1"
-            android:layout_width="match_parent"
-            android:layout_height="258dp" />
-
-    </LinearLayout>
+    
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,11 +26,34 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvDescr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:text="Describer" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    <TextView android:id="@+id/tvTimer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_marginTop="10dp" android:text="Timer" />
+    
+    </LinearLayout>
+
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <WebView
+            android:id="@+id/wvImgShow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
