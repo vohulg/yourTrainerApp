@@ -40,6 +40,11 @@ public class ATrainer extends Activity implements OnClickListener{
         btnStart = (Button)findViewById(R.id.btnStart);
         btnStart.setOnClickListener(this);
         
+        btnStart.setEnabled(false);
+        
+        
+       // btnStart.setActivated(false);
+        
        // startComplexChoose();
         
         
@@ -90,9 +95,15 @@ public class ATrainer extends Activity implements OnClickListener{
     @Override 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-		Log.d(LOG_TAG, "requestCode= " + String.valueOf(requestCode) + " resultCode = " + String.valueOf(resultCode) );
-
-    	 choosedComplexName = data.getStringExtra("extra_complexName");
+    	
+    	if(resultCode != RESULT_OK)
+    		return;
+    	
+    	else
+    		 btnStart.setEnabled(true);
+    	
+    	
+    	choosedComplexName = data.getStringExtra("extra_complexName");
     	 choosedComplexId = data.getStringExtra("extra_complexId");   	
     	 tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);    	
     	

@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AExercise extends Activity 
+public class AExercise extends Activity implements OnClickListener
 {
 	// for connect of database
 	final String LOG_TAG = "vh_tag";
@@ -27,12 +29,15 @@ public class AExercise extends Activity
 	private String choosedComplexId = null;
 	private int currentIndex = 0;
 	private int countOfExersInComplex = 0;
+	private int pausedIndex = -1;
+	
 	
 	// widgets
 	 private WebView wbPictur;
 	 private TextView tvDescr;
 	 private TextView tvExerName;
 	 private TextView tvTimer;
+	 private LinearLayout llMain; 
 	
 	 
 	 // values for timer	
@@ -55,50 +60,23 @@ public class AExercise extends Activity
 	        setContentView(R.layout.aexercise);	
 	        
 	        Intent intent = getIntent();
-	        choosedComplexName =intent.getStringExtra("nameChoosedCompex");
+	        choosedComplexName = intent.getStringExtra("nameChoosedCompex");
 	    	choosedComplexId = intent.getStringExtra("nameChoosedId");
 	    	
 	    	 wbPictur = (WebView)findViewById(R.id.wvImgShow);
 	    	 tvTimer = (TextView)findViewById(R.id.tvTimer);
 	    	 tvDescr = (TextView)findViewById(R.id.tvDescr);
 	    	 tvExerName = (TextView)findViewById(R.id.tvExerName);
+	    	 llMain = (LinearLayout)findViewById(R.id.llMain);
 	    	 
-	    	
-	    	 
+	    	 llMain.setOnClickListener(this);    	 
 	    	 
 	    	 fill_List();
 	    	 
 	    	 showTimer(0);
 	    	 
-	    	//showTimer(10, "file:///android_asset/1/1.gif");
-	    	 
-	    	 
-	    	 // start loop
-	    	/*
-	    	 int countOfExer = 2;
-	    	 String gifPath = null;
-	    	 int SecVal = 10;
-	    	
-	    	 int i = 0;
-	    	 
-	    	 while ( i < countOfExer)
-	    	 {	    	 
-	    		 
-	    		 gifPath = "file:///android_asset/1/" + String.valueOf(i+1) +".gif";	    		 
-	    		 wbPictur.loadUrl(gifPath);	 
-	    		 showTimer(SecVal * MillisInSec);	
-	    		 i++;
-	    	 }
-	    	 
-	    	 */
-	        
-	       // Log.d("vh_tag", "Choosed complex:" + choosedComplexName);
-	       // Log.d("vh_tag", choosedComplexId);
-	        
-	        
+	    		        
 	 }
-
-
 
 	 private boolean fill_List()
 	 {
@@ -109,7 +87,7 @@ public class AExercise extends Activity
 	      
 	      String column[] = {"exes_name", "exes_descr", "exes_photourl", "exes_timeinsec", "exes_order", "exes_istabata" };
 		String selection = "exes_complid =" + choosedComplexId;
-		String orderby = "exes_order desc";
+		String orderby = "exes_order";
 	      
 			Cursor c =  dataBase.query("tbExercises", column, selection, null, null, null, orderby);
 			int rows = c.getCount();
@@ -152,6 +130,27 @@ public class AExercise extends Activity
 		   dataBase.close();			
 			return true;		
 	}
+	 
+	 @Override
+	 public void onClick(View view)
+	 {
+		 if (timer != null) 
+			 timer.cancel() ;
+		 
+		 isPaused = true;
+		 pausedIndex = currentIndex;
+		 
+		   	
+    	Intent intent = new Intent(this, APaused.class) ;
+    	intent.putExtra("currentExerIndex", currentIndex);    
+    	intent.putExtra("maxCountOfExer", countOfExersInComplex); 
+    	startActivityForResult(intent, 13);
+		
+			
+		 
+		 
+		 
+	 }
 
 
 
@@ -185,10 +184,12 @@ public class AExercise extends Activity
 		
 		   }
 			   
-			if (isPaused == true)
+		
+		   if (isPaused == true)
 			{
 				count = (int)restMillisUntilFinished; 
 			}
+			
 			
 			timer = new CountDownTimer(count, MillisInSec) {
 				
@@ -204,6 +205,9 @@ public class AExercise extends Activity
 				@Override
 				public void onFinish()
 				{
+					isPaused = false;
+					restMillisUntilFinished = 0;
+					
 					currentIndex ++;
 					
 					// finish of complex
@@ -225,6 +229,33 @@ public class AExercise extends Activity
 			
 			
 		}
+	
+	
+	@Override 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+
+		// if not pressed buttun in APaused activity
+		if (resultCode != -1) 
+		{
+			isPaused = true;
+			showTimer(currentIndex);
+			return;
+			
+		}
+		
+		currentIndex = data.getIntExtra("choosedIndex", resultCode);
+		
+		if(pausedIndex == currentIndex)
+			isPaused = true;
+		
+		else
+			isPaused = false;
+		
+		showTimer(currentIndex);
+    	 	
+    	
+    }  
 	 
 	 
 	

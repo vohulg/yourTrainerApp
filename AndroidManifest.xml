@@ -24,6 +24,7 @@
         </activity>
         <activity android:name="AComplexList"></activity>
         <activity android:name="AExercise"></activity>
+        <activity android:name="APaused"></activity>
     </application>
 
 </manifest>

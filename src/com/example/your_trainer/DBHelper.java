@@ -71,25 +71,25 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding2')");
 		
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping1', '1', 'from place jump and spring', '/jump1.gif', '5', '1',  '0' )");
+                "values( 'jumping1', '1', 'from place jump and spring', '/jump1.gif', '15', '1',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping2', '1', 'from place jump and spring', '/jump2.gif', '5', '2',  '0' )");
+                "values( 'jumping2', '1', 'from place jump and spring', '/jump2.gif', '15', '2',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping3', '1', 'from place jump and spring', '/jump3.gif', '6', '3',  '0' )");
+                "values( 'jumping3', '1', 'from place jump and spring', '/jump3.gif', '16', '3',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping4', '1', 'from place jump and spring', '/jump4.gif', '7', '4',  '0' )");
+                "values( 'jumping4', '1', 'from place jump and spring', '/jump4.gif', '17', '4',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping5', '1', 'from place jump and spring', '/jump5.gif', '4', '5',  '0' )");
+                "values( 'jumping5', '1', 'from place jump and spring', '/jump5.gif', '14', '5',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping6', '1', 'from place jump and spring', '/jump6.gif', '3', '6',  '0' )");
+                "values( 'jumping6', '1', 'from place jump and spring', '/jump6.gif', '13', '6',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping7', '1', 'from place jump and spring', '/jump7.gif', '5', '7',  '0' )");
+                "values( 'jumping7', '1', 'from place jump and spring', '/jump7.gif', '15', '7',  '0' )");
 
 		
 		/*
