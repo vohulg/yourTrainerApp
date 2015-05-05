@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -54,9 +56,12 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	 // value for exercises content
 	 private List<AExercisContent> listOfExer;
 	 
-	 // speech text
-	 
+	 // speech text	 
 	 private TextToSpeech tts;
+	 
+	 // mediapleer
+	 private MediaPlayer mplayer;
+	 AudioManager audioManager;
 	 
 	 	
 
@@ -68,6 +73,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	        
 	       	        
 	        initialTTS();
+	        initialPlayer();
 	        
 	           	        
 	        Intent intent = getIntent();
@@ -82,9 +88,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	    	 
 	    	 llMain.setOnClickListener(this);    	 
 	    	 
-	    	 //fill_List();
-	    	 
-	    	// showTimer(0);
+	    	
 	    	 
 	    	
 	    	
@@ -221,6 +225,8 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 				@Override
 				public void onFinish()
 				{
+					playAudio();
+					
 					isPaused = false;
 					restMillisUntilFinished = 0;
 					
@@ -229,7 +235,9 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 					// finish of complex
 					if (currentIndex > (countOfExersInComplex-1))
 					{
-						wbPictur.setVisibility(View.INVISIBLE);
+						Intent intent = new Intent(getApplicationContext(), AEnding.class); // call activity  
+						startActivity(intent);
+						//wbPictur.setVisibility(View.INVISIBLE);
 						return;
 					}
 					// continue complex
@@ -336,6 +344,59 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	}
 	 
 	 
+	private void initialPlayer()
+	{
+		audioManager = (AudioManager)getSystemService(AUDIO_SERVICE);
+		
+		
+	}
+	
+	private void playAudio()
+	{
+		
+		mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ring);
+		mplayer.start();
+		
+		
+	}
+	
+	 @Override
+	 protected void onDestroy()
+	 {
+		
+		 releaseMplayer();
+		 releaseTTS(); 
+		 
+		 super.onDestroy();
+	 }
+	 
+	 private void releaseMplayer()
+	 {
+		 if(mplayer != null)
+		 {
+			try {
+			 mplayer.release();
+			 mplayer = null;
+			}
+			
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			 
+		 } 
+		 
+	 }
+	 
+	 private void releaseTTS()
+	 {
+		 if (tts != null)
+		 {
+			 tts.stop();
+			 tts.shutdown();
+		 }
+		 
+	 }
 	
 	 
 	 
