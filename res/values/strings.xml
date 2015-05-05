@@ -4,5 +4,8 @@
     <string name="app_name">Trainer</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="warn">Language not support</string>
+    <string name="create">Created</string>
+    <string name="tts_error">TTS initialization is faild</string>
 
 </resources>

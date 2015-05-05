@@ -123,10 +123,7 @@ public class AComplexList extends Activity implements OnClickListener {
 			
 		}
 		
-		c.close();
-		
-		
-				
+		c.close();			
 		return true;
 		
 	}
@@ -138,11 +135,8 @@ public class AComplexList extends Activity implements OnClickListener {
 		{
 		  case R.id.btnBack : 			
 			  sendComplexName(); // send choosed complex name to main activity 
-			  break;
-		
-		}
-		
-		
+			  break;		
+		}	
 		
 	}
 
@@ -154,9 +148,7 @@ public class AComplexList extends Activity implements OnClickListener {
 		int selectedPos = adapter.getSelectedItem();
 		
 		String nameRet = listOfComplex.get(selectedPos).getName();
-		String idRet = listOfComplex.get(selectedPos).getId();
-		
-		
+		String idRet = listOfComplex.get(selectedPos).getId();		
 		
 		//String choosedComplex =  ArrComplName[lvMain.getCheckedItemPosition()];
 		Intent intent = new Intent();

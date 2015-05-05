@@ -71,10 +71,10 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding2')");
 		
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping1', '1', 'from place jump and spring', '/jump1.gif', '15', '1',  '0' )");
+                "values( 'прыжеки вверх', '1', 'from place jump and spring', '/jump1.gif', '15', '1',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
-                "values( 'jumping2', '1', 'from place jump and spring', '/jump2.gif', '15', '2',  '0' )");
+                "values( 'прыжеки вниз', '1', 'from place jump and spring', '/jump2.gif', '15', '2',  '0' )");
 
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
                 "values( 'jumping3', '1', 'from place jump and spring', '/jump3.gif', '16', '3',  '0' )");

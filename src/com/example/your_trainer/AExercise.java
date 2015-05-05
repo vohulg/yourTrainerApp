@@ -2,6 +2,7 @@ package com.example.your_trainer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,14 +10,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class AExercise extends Activity implements OnClickListener
+public class AExercise extends Activity implements OnClickListener //, TextToSpeech.OnInitListener 
 {
 	// for connect of database
 	final String LOG_TAG = "vh_tag";
@@ -50,8 +53,12 @@ public class AExercise extends Activity implements OnClickListener
 	 
 	 // value for exercises content
 	 private List<AExercisContent> listOfExer;
-	
-	
+	 
+	 // speech text
+	 
+	 private TextToSpeech tts;
+	 
+	 	
 
 	 @Override
 	 protected void onCreate(Bundle savedInstanceState) 
@@ -59,6 +66,10 @@ public class AExercise extends Activity implements OnClickListener
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.aexercise);	
 	        
+	       	        
+	        initialTTS();
+	        
+	           	        
 	        Intent intent = getIntent();
 	        choosedComplexName = intent.getStringExtra("nameChoosedCompex");
 	    	choosedComplexId = intent.getStringExtra("nameChoosedId");
@@ -71,9 +82,12 @@ public class AExercise extends Activity implements OnClickListener
 	    	 
 	    	 llMain.setOnClickListener(this);    	 
 	    	 
-	    	 fill_List();
+	    	 //fill_List();
 	    	 
-	    	 showTimer(0);
+	    	// showTimer(0);
+	    	 
+	    	
+	    	
 	    	 
 	    		        
 	 }
@@ -171,6 +185,8 @@ public class AExercise extends Activity implements OnClickListener
 		 wbPictur.loadUrl(gifPath);
 		 tvDescr.setText(descr); 
     	 tvExerName.setText(name);
+    	 
+    	 speechOut(name);
 		 
 		
 		
@@ -255,7 +271,69 @@ public class AExercise extends Activity implements OnClickListener
 		showTimer(currentIndex);
     	 	
     	
-    }  
+    }
+
+
+	
+	
+	@SuppressWarnings("deprecation")
+	void speechOut(String txt)
+	{
+		//txt = "hello";
+		tts.speak(txt, TextToSpeech.QUEUE_FLUSH, null);
+		//String utteranceId = null;
+		//tts.speak(txt, TextToSpeech.QUEUE_FLUSH,null, utteranceId);
+	
+		
+	}
+	
+	private void initialTTS()
+	{
+		
+		 //TextToSpeech.OnInitListener listner = new TextToSpeech.OnInitListener();
+   	 tts = new TextToSpeech(this,  new TextToSpeech.OnInitListener() {
+
+			@Override
+			public void onInit(int status)
+			{
+				if (status == TextToSpeech.SUCCESS)
+				{
+					Locale local = new Locale("ru");
+					int ret = tts.setLanguage(Locale.getDefault());
+					
+					if (ret == TextToSpeech.LANG_MISSING_DATA || ret == TextToSpeech.LANG_NOT_SUPPORTED)
+							{
+								
+						      Toast  toast = Toast.makeText(getApplicationContext(), R.string.warn, Toast.LENGTH_SHORT);
+					           toast.show();
+						
+							}
+					
+					else
+					{					
+					
+					 fill_List(); // получаем из базы список упражнений
+			    	 showTimer(0); // запуск таймера
+			    	 
+					}
+					
+				}
+				
+				else
+				{
+					 Toast  toast = Toast.makeText(getApplicationContext(), R.string.tts_error, Toast.LENGTH_SHORT);
+			           toast.show();
+				}
+				
+				
+			}
+			
+   	 } );
+   	 
+   	
+		
+		
+	}
 	 
 	 
 	
