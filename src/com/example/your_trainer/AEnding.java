@@ -16,6 +16,7 @@ public class AEnding extends Activity implements OnClickListener
 	 {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.a_end);
+	       
 	        
 	        btnBack = (Button)findViewById(R.id.btnBackToChooseCompl);
 	        btnBack.setOnClickListener(this);

@@ -1,0 +1,3 @@
+Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+//Log.d("vh_tag", String.valueOf(check));

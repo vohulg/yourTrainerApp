@@ -3,17 +3,18 @@ package com.example.your_trainer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ATrainer extends Activity implements OnClickListener{
 	private Button btnChooseComplex;
 	Button btnStart;
+	Button btnGoSet;
+	Button btnAddCopmplex;
 	
 	final String LOG_TAG = "vh_tag";
 	TextView tvChoosedName;
@@ -42,6 +43,12 @@ public class ATrainer extends Activity implements OnClickListener{
         
         btnStart.setEnabled(false);
         
+        btnGoSet = (Button)findViewById(R.id.btnGo2Setting);
+        btnGoSet.setOnClickListener(this);
+        
+        btnAddCopmplex = (Button)findViewById(R.id.btnAddComplex);
+        btnAddCopmplex.setOnClickListener(this);
+        
         
        // btnStart.setActivated(false);
         
@@ -57,13 +64,21 @@ public class ATrainer extends Activity implements OnClickListener{
     {
     	switch(v.getId())
     	{
-	    	case R.id.btChooseComplex:
+	    	case R.id.btChooseComplex:	    		
 	    		startComplexChoose();
 	    		break;
 	    		
-	    	case R.id.btnStart:
+	    	case R.id.btnStart:	    		
 	    		startExercice();
-	    		break;	    		
+	    		break;	    
+	    		
+	    	case R.id.btnGo2Setting:
+	    		goToSetting();
+	    		break;	
+
+	    	case R.id.btnAddComplex:
+	    		goToAddComplex();
+	    		break;	
 	    	
 	    	default: break;
     	
@@ -71,7 +86,14 @@ public class ATrainer extends Activity implements OnClickListener{
     	
     }
     
-    private void startExercice() 
+    private void goToAddComplex()
+    {
+    	Intent intent1 = new Intent(this, AAddCompl.class) ;    		
+    	startActivity(intent1);
+		
+	}
+
+	private void startExercice() 
     {   	
     	Intent intent1 = new Intent(this, AExercise.class) ;
     	intent1.putExtra("nameChoosedCompex", choosedComplexName);
@@ -108,6 +130,17 @@ public class ATrainer extends Activity implements OnClickListener{
     	 tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);    	
     	
     }  
+    
+   public void goToSetting()
+    {
+	   Intent intent = new Intent(this, ASettings.class) ;
+       startActivity(intent);     	
+    }
+    
+    private void showToast(String str)
+    {    	
+    	Toast.makeText(this, str, Toast.LENGTH_SHORT).show();  	
+    }
     
     
     

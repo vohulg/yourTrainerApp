@@ -26,6 +26,9 @@
         <activity android:name="AExercise"></activity>
         <activity android:name="APaused"></activity>
         <activity android:name="AEnding"></activity>
+        <activity android:name="ASettings"></activity>
+        <activity android:name="FileBrowserActivity"></activity>
+        <activity android:name="AAddCompl"></activity>
     </application>
 
 </manifest>
