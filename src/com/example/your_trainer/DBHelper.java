@@ -1,5 +1,7 @@
 package com.example.your_trainer;
 
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,21 +10,21 @@ import android.util.Log;
 class DBHelper extends SQLiteOpenHelper
 {
 	final String LOG_TAG = "vh_tag";
-	private String DBName;
+	private final String DBName;
 	final private String tbComplex = "tbComplexes";
 	final private String tbExercise = "tbExercises";
-	
+
 	public DBHelper(Context context, String dbName) {
 		super(context, dbName, null, 1);
 		DBName = dbName;
-		
+
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.d(LOG_TAG, "----Create data base---" + DBName);
-		
-		
+
+
 		Log.d(LOG_TAG, "----Create table---tbComplexes");
 		db.execSQL("create table tbComplexes ("
 				+ "id integer primary key autoincrement,"
@@ -31,7 +33,7 @@ class DBHelper extends SQLiteOpenHelper
 				+ "comp_totaltime text,"
 				+ "comp_repeat integer,"
 				+"comp_default_music text" + ");");
-		
+
 		Log.d(LOG_TAG, "----Create table---tbExercises");
 		db.execSQL("create table tbExercises ("
 				+ "id integer primary key autoincrement,"
@@ -42,12 +44,12 @@ class DBHelper extends SQLiteOpenHelper
 				+ "exes_timeinsec integer,"
 				+ "exes_order integer,"
 				+"exes_istabata integer" + ");");
-				
-				
-		
-		fillDB(db);
+
+
+
+		// fillDB(db);
 		Log.d(LOG_TAG, "----Tables filled with data");
-		
+
 	}
 
 	private void fillDB(SQLiteDatabase db)
@@ -69,7 +71,7 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("insert into tbComplexes ('comp_name') values ('relax2')");
 		db.execSQL("insert into tbComplexes ('comp_name') values ('kidExercis2')");
 		db.execSQL("insert into tbComplexes ('comp_name') values ('bodyBilding2')");
-		
+
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
                 "values( 'прыжеки вверх', '1', 'from place jump and spring', '/jump1.gif', '5', '1',  '0' )");
 
@@ -91,7 +93,7 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_photourl', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) " +
                 "values( 'jumping7', '1', 'from place jump and spring', '/jump7.gif', '5', '7',  '0' )");
 
-		
+
 		/*
 		db.execSQL("insert into tbExercises ('exes_name', " +
 				"'exes_complid'," +
@@ -113,17 +115,31 @@ class DBHelper extends SQLiteOpenHelper
 				+ "exes_timeinsec integer,"
 				+ "exes_order integer,"
 				+"comp_istabata integer
-		 * 
+		 *
 		 * */
 		//db.execSQL("insert into tbComplexList ('name') values ('konstantin')");
 
-		
+
+	}
+
+	public void insertData(List<AExerForParsing> list, SQLiteDatabase db) {
+
+		for (int i = 0; i < list.size(); i++) {
+
+			AExerForParsing obj = list.get(i);
+
+			//db.execSQL("insert into tbComplexes ('" + obj.getComplName() + "') values ('pushup')");
+
+			db.execSQL("insert into tbComplexes ('comp_name') values ('" + obj.getComplName() + "')");
+
+		}
+
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
