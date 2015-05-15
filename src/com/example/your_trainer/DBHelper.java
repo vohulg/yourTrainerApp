@@ -1,8 +1,10 @@
 package com.example.your_trainer;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -122,17 +124,58 @@ class DBHelper extends SQLiteOpenHelper
 
 	}
 
-	public void insertData(List<AExerForParsing> list, SQLiteDatabase db) {
+	public void insertData(List<AExerForParsing> list, SQLiteDatabase db) throws IOException {
 
 		for (int i = 0; i < list.size(); i++) {
 
+			//1. Write complex info
 			AExerForParsing obj = list.get(i);
+			String sql = null;
+			sql = "insert into tbComplexes ('comp_name') values ('"+ obj.getComplName() + "')";
+			db.execSQL(sql);
 
-			//db.execSQL("insert into tbComplexes ('" + obj.getComplName() + "') values ('pushup')");
+			//2. Get id of this complex (last writed)
+			int idCompl = getIdLastComplexId(db);
 
-			db.execSQL("insert into tbComplexes ('comp_name') values ('" + obj.getComplName() + "')");
+			if (idCompl == -1)
+			{
+				ALog.writeLog("new complex name not writed to database Error vh_35");
+			}
+
+
+			//3. Write exersices info
+
+			for (int j = 0; j < obj.getCountOfExer(); j++)
+			{
+
+
+
+
+			}
 
 		}
+
+	}
+
+	private int getIdLastComplexId(SQLiteDatabase dataBase) throws IOException
+	{
+	     String column[] = {"id" };
+		 String orderby = "desc";
+
+			Cursor c =  dataBase.query("tbComplexes", column, null, null, null, null, orderby);
+			int rows = c.getCount();
+
+			if (rows == 0)
+			{
+				ALog.writeLog("tbComplexes is empty Error vh_34");
+				return -1;
+			}
+
+			// if row != 0
+			int IdName = c.getColumnIndex("id");
+			c.moveToFirst();
+			int IdCompl =  c.getInt(IdName);
+			return IdCompl;
 
 	}
 

@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 //import com.example.p007_file.AExerForParsing;
@@ -25,6 +26,9 @@ public class AAddCompl extends Activity
 	private TextView tvInfo;
 	private List<AExerForParsing> list;
 
+	Button btnStartParse ;
+	String choosedFile = null;
+
 
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,11 @@ public class AAddCompl extends Activity
 		tvInfo = (TextView) findViewById(R.id.tvStatus);
 
 		list = new ArrayList<AExerForParsing>();
+
+		btnStartParse = (Button)findViewById(R.id.btnStartParse);
+
+		btnStartParse.setEnabled(false);
+
 
 	 }
 
@@ -64,51 +73,56 @@ public class AAddCompl extends Activity
 	 @Override
 		protected void onActivityResult(int requestCode, int resultCode, Intent data)
 		 {
-		 if (requestCode == REQUEST_CODE_PICK_FILE) {
-	        	if(resultCode == RESULT_OK) {
-	        		String choosedFile = data.getStringExtra(FileBrowserActivity.returnFileParameter);
-				tvInfo.setText(choosedFile);
-
-				try
-	        		 {
-						parseFile(choosedFile);
-					sendListToDataBase();
-					 }
-
-	        		 catch (IOException e)
-					{
-						e.printStackTrace();
-					}
-	        	}
-	        	else
+		 if (requestCode == REQUEST_CODE_PICK_FILE)
+		 {
+	        	if(resultCode == RESULT_OK)
 	        	{
+	        		choosedFile = data.getStringExtra(FileBrowserActivity.returnFileParameter);
+	        		tvInfo.setText(choosedFile);
+	        		btnStartParse.setEnabled(true);
+
+
+	            }
+
+	        	else
+		    	{
 				Toast.makeText(this, "Received NO result from file browser",
 						Toast.LENGTH_LONG).show();
-	        	}
-	        }
+		    	}
 
 
 
 			super.onActivityResult(requestCode, resultCode, data);
 
 		 }
+		 }
 
 
-	private void sendListToDataBase() {
-		// 1. Create connection with database
-		DBHelper dbhelper;
-		SQLiteDatabase dataBase;
-		dbhelper = new DBHelper(this, "dbTrainer");
-		dataBase = dbhelper.getWritableDatabase();
+	 public void sendListToDb(View view) throws IOException
+		{
+			startParse();
+			sendListToDataBase();
+		}
 
-		// 2. Send list to write to database
-		dbhelper.insertData(list, dataBase);
 
-		// 3. close database
-		dbhelper.close();
-		dataBase.close();
+		 private void startParse()
+		 {
+			 try
+    		 {
+				parseFile(choosedFile);
 
-	}
+			 }
+
+    		 catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+
+
+
+		 }
+
 
 	private void parseFile(String choosedFile) throws IOException
 	    {
@@ -208,11 +222,26 @@ public class AAddCompl extends Activity
 
 	    }
 
-	public void sendListToDb() {
 
 
+
+	private void sendListToDataBase() throws IOException {
+		// 1. Create connection with database
+		DBHelper dbhelper;
+		SQLiteDatabase dataBase;
+		dbhelper = new DBHelper(this, "dbTrainer");
+		dataBase = dbhelper.getWritableDatabase();
+
+		// 2. Send list to write to database
+		dbhelper.insertData(list, dataBase);
+
+		// 3. close database
+		dbhelper.close();
+		dataBase.close();
 
 	}
+
+
 
 
 

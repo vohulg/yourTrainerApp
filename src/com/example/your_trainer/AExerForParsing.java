@@ -91,5 +91,11 @@ public class AExerForParsing
 
 	}
 
+	public int getCountOfExer()
+	{
+		return listExerName.size();
+
+	}
+
 }
 
