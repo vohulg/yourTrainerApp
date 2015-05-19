@@ -71,16 +71,12 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 
 
+
 	 @Override
 	 protected void onCreate(Bundle savedInstanceState)
 	 {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.aexercise);
-
-
-	        initialTTS();
-	        initialPlayer();
-
 
 	        Intent intent = getIntent();
 	        choosedComplexName = intent.getStringExtra("nameChoosedCompex");
@@ -95,10 +91,24 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 	    	 llMain.setOnClickListener(this);
 
+	    	 initialTTS();
+		     initialPlayer();
 
 
 
 
+
+
+
+	 }
+
+	 public List<AExercisContent> getListOfExer(String ComplexId)
+	 {
+
+		choosedComplexId = ComplexId;
+		fill_List();
+
+		 return listOfExer;
 
 
 	 }
@@ -110,7 +120,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	     dataBase = dbhelper.getReadableDatabase();
 	     listOfExer = new ArrayList<AExercisContent>();
 
-	      String column[] = {"exes_name", "exes_descr", "exes_photourl", "exes_timeinsec", "exes_order", "exes_istabata" };
+	    String column[] = {"exes_name", "exes_descr", "exes_photourl", "exes_timeinsec", "exes_order", "exes_istabata" };
 		String selection = "exes_complid =" + choosedComplexId;
 		String orderby = "exes_order";
 
@@ -189,7 +199,10 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 		// get path to folder of complex
 		String pathComplex = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + appDir + "/" + instan.getFolderPath();
 
-		String gifPath = pathComplex + "/" + (indexOfList + 1) + ".gif";
+		String gifPath =  "file://" +  pathComplex + "/" + (indexOfList + 1) + ".gif";
+
+		String html = "<html><head></head><body><img src=\""+ gifPath + "\"></body></html>";
+		//mWebView.loadData(html, "text/html","utf-8");
 
 
 
@@ -206,8 +219,6 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
     	 tvExerName.setText(name);
 
     	 speechOut(name);
-
-
 
 
 		// 3. Show timer
@@ -250,8 +261,14 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 					// finish of complex
 					if (currentIndex > (countOfExersInComplex-1))
 					{
-						Intent intent = new Intent(getApplicationContext(), AEnding.class); // call activity
-						startActivity(intent);
+
+						 if (timer != null)
+						   {
+							   timer.cancel();
+
+						   }
+						Intent intentEnd = new Intent(getApplicationContext(), AEnding.class); // call activity
+						startActivity(intentEnd);
 						//wbPictur.setVisibility(View.INVISIBLE);
 						return;
 					}

@@ -8,6 +8,7 @@ public class AExercisContent
 	private final String Description;
 	private final String FolderPath;
 	private final int timeInSec;
+	private int Id;
 
 
 	public AExercisContent(String name, String url, String descr, int time, String folder)
@@ -19,6 +20,14 @@ public class AExercisContent
 		this.FolderPath = folder;
 
 	}
+
+	public void setId(int id)
+	{
+		this.Id = id;
+
+	}
+
+	public int getId(){return this.Id;}
 
 	public String getName(){return this.nameExerc;}
 	public String getUrl(){return this.Url_Picture;}
