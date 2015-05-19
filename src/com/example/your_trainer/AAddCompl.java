@@ -1,6 +1,7 @@
 package com.example.your_trainer;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class AAddCompl extends Activity
 {
 
 	private final String appDir = "train";
+	private final String folderPrefix = "vh_";
 	private final int REQUEST_CODE_PICK_DIR = 1;
 	private final int REQUEST_CODE_PICK_FILE = 2;
 	private TextView tvInfo;
@@ -163,9 +165,16 @@ public class AAddCompl extends Activity
 
 	    				if(line.startsWith(folderNamePrefix))
 	    				{
-	    					line = line.replaceAll(folderNamePrefix, ""); // folder with gifs
-	    			    	//line = line.replaceAll(" ", ""); //
-	    			    	obj.setFolder(line.trim());
+	    					line = line.replaceAll(folderNamePrefix, "").trim(); // folder with gifs
+
+	    					line = renameFolder(line);
+
+	    					if (line == null)
+	    						line = "no folder";
+
+
+
+	    			    	obj.setFolder(line);
 
 	    				}
 
@@ -225,6 +234,36 @@ public class AAddCompl extends Activity
 
 
 
+	private String renameFolder(String line)
+	{
+
+		File sdDirRenamed = Environment.getExternalStorageDirectory();
+		String newPath = sdDirRenamed.getAbsolutePath() + "/" + appDir + "/" + folderPrefix  + line;
+		sdDirRenamed = new File(newPath);
+
+		File sdDir = Environment.getExternalStorageDirectory();
+		 sdDir = new File(sdDir.getAbsolutePath() + "/" + appDir + "/" + line);
+
+
+
+		 if(sdDir.exists())
+		 {
+			   boolean ret =  sdDir.renameTo(sdDirRenamed);
+
+			   if(ret == true)
+			   {
+				   return (folderPrefix + line);
+
+			   }
+
+		 }
+
+		 else
+		    return null;
+
+		 return null;
+	}
+
 	private void sendListToDataBase() throws IOException {
 		// 1. Create connection with database
 		DBHelper dbhelper;
@@ -240,6 +279,18 @@ public class AAddCompl extends Activity
 		dataBase.close();
 
 	}
+
+	public void clearDb(View view)
+	{
+		boolean ret = this.deleteDatabase("dbTrainer");
+
+		if (ret == true)
+			Toast.makeText(this, "Database is secuessfull deleted", Toast.LENGTH_SHORT).show();
+		else
+			Toast.makeText(this, "Error. Database not deleted", Toast.LENGTH_SHORT).show();
+
+	}
+
 
 
 

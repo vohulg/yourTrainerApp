@@ -21,6 +21,8 @@ public class ATrainer extends Activity implements OnClickListener{
 
 	String choosedComplexName = null;
 	String choosedComplexId = null;
+	String choosedComplexFolder = null;
+
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,8 @@ public class ATrainer extends Activity implements OnClickListener{
     	Intent intent1 = new Intent(this, AExercise.class) ;
     	intent1.putExtra("nameChoosedCompex", choosedComplexName);
     	intent1.putExtra("nameChoosedId", choosedComplexId);
+    	intent1.putExtra("nameChoosedFolder", choosedComplexFolder);
+
     	startActivity(intent1);
 
 	}
@@ -127,6 +131,8 @@ public class ATrainer extends Activity implements OnClickListener{
 
     	choosedComplexName = data.getStringExtra("extra_complexName");
     	 choosedComplexId = data.getStringExtra("extra_complexId");
+    	 choosedComplexFolder = data.getStringExtra("extra_complexFolder");
+
     	 tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);
 
     }

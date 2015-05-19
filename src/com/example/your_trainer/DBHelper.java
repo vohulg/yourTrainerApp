@@ -1,6 +1,7 @@
 package com.example.your_trainer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -31,6 +32,7 @@ class DBHelper extends SQLiteOpenHelper
 		db.execSQL("create table tbComplexes ("
 				+ "id integer primary key autoincrement,"
 				+ "comp_name text,"
+				+ "comp_folder text,"  // folder must be in /sdcard/train
 				+ "comp_custom_music text,"
 				+ "comp_totaltime text,"
 				+ "comp_repeat integer,"
@@ -131,8 +133,11 @@ class DBHelper extends SQLiteOpenHelper
 			//1. Write complex info
 			AExerForParsing obj = list.get(i);
 			String sql = null;
-			sql = "insert into tbComplexes ('comp_name') values ('"+ obj.getComplName() + "')";
+			sql = "insert into tbComplexes ('comp_name' , 'comp_folder') values ('"+ obj.getComplName() + "','" + obj.getFolderName() + "')";
 			db.execSQL(sql);
+
+
+
 
 			//2. Get id of this complex (last writed)
 			int idCompl = getIdLastComplexId(db);
@@ -142,14 +147,21 @@ class DBHelper extends SQLiteOpenHelper
 				ALog.writeLog("new complex name not writed to database Error vh_35");
 			}
 
+			//3.Get arrays of exersises info
+			 ArrayList<String> listExerName = obj.getlistExerNamet();
+			 ArrayList<String> listExerDescr  = obj.getlistExerDescr();
+			 ArrayList<String> listExerTimeInSec  = obj.getlistExerTimeInSec();
 
-			//3. Write exersices info
-
+			//4. Write exersices info
 			for (int j = 0; j < obj.getCountOfExer(); j++)
 			{
+					String exName = listExerName.get(j);
+					String exDescr = listExerDescr.get(j);
+					String exTime = listExerTimeInSec.get(j);
+					String isTabata = "0";
 
-
-
+					String sqlStr = "insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) values('" + exName + "', '" + String.valueOf(idCompl) +"', '" + exDescr + "',  '" + exTime + "', '" + String.valueOf(j+1) +  "',  '" + isTabata + "')";
+					db.execSQL(sqlStr);
 
 			}
 
@@ -160,7 +172,7 @@ class DBHelper extends SQLiteOpenHelper
 	private int getIdLastComplexId(SQLiteDatabase dataBase) throws IOException
 	{
 	     String column[] = {"id" };
-		 String orderby = "desc";
+		 String orderby = " id desc";
 
 			Cursor c =  dataBase.query("tbComplexes", column, null, null, null, null, orderby);
 			int rows = c.getCount();

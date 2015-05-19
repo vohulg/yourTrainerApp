@@ -81,7 +81,7 @@ public class AExerForParsing
 
 	public ArrayList<String> getlistExerDescr() {
 
-		return listExerName;
+		return listExerDescr;
 
 	}
 
