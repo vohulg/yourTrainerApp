@@ -11,19 +11,32 @@
         android:layout_gravity="center_horizontal|left"
         android:layout_marginLeft="5dp"
         android:text="Name" />
-   
 
-             
-         
-         <NumberPicker
-		    android:id="@+id/npTime"
-		    android:layout_gravity="center_horizontal|right"
-            android:layout_marginRight="5dp"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content" >
-        </NumberPicker>
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_gravity="center_horizontal|right"
+        android:layout_marginRight="100dp"
+        android:inputType="number" />
 
-       
-   
+    <Button
+        android:id="@+id/btnPlus"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|right"
+        android:onClick="plusOne"
+        android:layout_marginRight="50dp"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/btnMinus"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|right"
+        android:text="-" />
           
 </FrameLayout>

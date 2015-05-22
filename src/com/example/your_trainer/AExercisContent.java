@@ -7,7 +7,7 @@ public class AExercisContent
 	private final String Url_Picture;
 	private final String Description;
 	private final String FolderPath;
-	private final int timeInSec;
+	private int timeInSec;
 	private int Id;
 
 
@@ -24,6 +24,12 @@ public class AExercisContent
 	public void setId(int id)
 	{
 		this.Id = id;
+
+	}
+
+	public void setTime(int newTime)
+	{
+		this.timeInSec = newTime;
 
 	}
 

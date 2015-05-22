@@ -9,18 +9,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ASettings extends Activity
 {
 
+	SetTimeAdapter adapter;
 	DBHelper dbhelper;
 	SQLiteDatabase dataBase;
 
 	String choosedComplexName = null;
 	String choosedComplexId = null;
 	TextView tvChoosedName;
+	ListView lvMain;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -30,7 +33,7 @@ public class ASettings extends Activity
 
 	        tvChoosedName = (TextView)findViewById(R.id.tvStatus);
 
-	 }
+	}
 
 	public void chooseComplex(View view)
 	{
@@ -75,7 +78,9 @@ public class ASettings extends Activity
 		List<AExercisContent> listOfExer =  fill_List(choosedComplexId);
 
 		//2. Show list of exersises and time edit for each exersise
-
+		 adapter = new SetTimeAdapter(this, listOfExer);
+		 lvMain = (ListView)findViewById(R.id.lvExers);
+	     lvMain.setAdapter(adapter);
 
 
 		//3. send new data to database
