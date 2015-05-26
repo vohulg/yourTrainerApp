@@ -28,6 +28,7 @@ public class SetTimeAdapter extends BaseAdapter implements OnClickListener
 	private int changedPos = 0;
 	private  boolean isLongTouch = false;
 
+
 	public SetTimeAdapter (Context context, List<AExercisContent> listOfExer)
 	{
 		this.context = context;
@@ -90,19 +91,27 @@ public class SetTimeAdapter extends BaseAdapter implements OnClickListener
 			public boolean onTouch(View pView, MotionEvent pEvent)
 			{
 
+				if( isLongTouch == false )
+				{
+					return false;
+				}
+
 				pView.onTouchEvent(pEvent);
 	               // We're only interested in when the button is released.
 	               if (pEvent.getAction() == MotionEvent.ACTION_UP)
 	               {
-	    			Toast.makeText(context , "Finger up", Toast.LENGTH_LONG).show();
+
+	            	   Toast.makeText(context , "Finger up", Toast.LENGTH_LONG).show();
 
 	               }
 
 	               else if (pEvent.getAction() == MotionEvent.ACTION_DOWN)
 	               {
-
+	            	   Toast.makeText(context , "Finger down", Toast.LENGTH_LONG).show();
 
 	               }
+
+	               isLongTouch = false;
 
 				return false;
 			}
@@ -134,6 +143,11 @@ public class SetTimeAdapter extends BaseAdapter implements OnClickListener
 			@Override
 			public void onClick(View view)
 			{
+				if( isLongTouch == true )
+				{
+					return ;
+				}
+
 				Integer posObj = (Integer) view.getTag();
     			int posit = posObj.intValue();
     			int newTime = listOfExer.get(posit).getTime() + 1;
@@ -180,6 +194,21 @@ public class SetTimeAdapter extends BaseAdapter implements OnClickListener
 
 
 				}
+
+				if (keyCode == event.KEYCODE_BACKSLASH )
+				{
+					//EditText edTex = (EditText)view;
+					//String newTime = "0";
+					//int nTime = Integer.parseInt(newTime);
+
+					Integer posObj = (Integer) view.getTag();
+	    			int posit = posObj.intValue();
+
+	    			listOfExer.get(posit).setTime(0);
+	    			notifyDataSetChanged();
+
+				}
+
 				/*
 				int pressedKey =  event.getUnicodeChar();
 

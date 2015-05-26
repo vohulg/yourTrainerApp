@@ -9,11 +9,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ASettings extends Activity
+public class ASettings extends Activity implements OnClickListener
 {
 
 	SetTimeAdapter adapter;
@@ -24,6 +26,8 @@ public class ASettings extends Activity
 	String choosedComplexId = null;
 	TextView tvChoosedName;
 	ListView lvMain;
+	private Button btnUpdate ;
+	private List<AExercisContent> ListOfExer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +36,12 @@ public class ASettings extends Activity
 	        setContentView(R.layout.asetting);
 
 	        tvChoosedName = (TextView)findViewById(R.id.tvStatus);
+	        btnUpdate = (Button)findViewById(R.id.btnUpdate);
+	        btnUpdate.setOnClickListener(this);
+
+	        dbhelper = new DBHelper(this, "dbTrainer");
+		    dataBase = dbhelper.getWritableDatabase();
+
 
 	}
 
@@ -75,10 +85,10 @@ public class ASettings extends Activity
 
 		// Setting for each exercise
 		//1. Get name, time and id of all exercises of complex
-		List<AExercisContent> listOfExer =  fill_List(choosedComplexId);
+		ListOfExer =  fill_List(choosedComplexId);
 
 		//2. Show list of exersises and time edit for each exersise
-		 adapter = new SetTimeAdapter(this, listOfExer);
+		 adapter = new SetTimeAdapter(this, ListOfExer);
 		 lvMain = (ListView)findViewById(R.id.lvExers);
 	     lvMain.setAdapter(adapter);
 
@@ -92,8 +102,8 @@ public class ASettings extends Activity
 	 private List<AExercisContent> fill_List(String ComplexId)
 	 {
 
-		 dbhelper = new DBHelper(this, "dbTrainer");
-	     dataBase = dbhelper.getReadableDatabase();
+		// dbhelper = new DBHelper(this, "dbTrainer");
+	    // dataBase = dbhelper.getReadableDatabase();
 	     List<AExercisContent> listOfExer = new ArrayList<AExercisContent>();
 
 	    String column[] = {"id", "exes_name", "exes_descr", "exes_photourl", "exes_timeinsec", "exes_order", "exes_istabata" };
@@ -131,10 +141,36 @@ public class ASettings extends Activity
 			}
 
 			c.close();
-		   dbhelper.close();
-		   dataBase.close();
+		  // dbhelper.close();
+		  // dataBase.close();
 			return listOfExer;
 	}
+
+	@Override
+	public void onClick(View v)
+	{
+	   switch(v.getId())
+	   {
+	   case R.id.btnUpdate:
+		   updateTime(ListOfExer, dataBase);
+		   break;
+
+
+	   }
+
+	}
+
+	private void updateTime(List<AExercisContent> listOfExers, SQLiteDatabase db)
+	{
+		//dbhelper = new DBHelper(this, "dbTrainer");
+	    //dataBase = dbhelper.getWritableDatabase();
+	    dbhelper.updateTime(listOfExers, db);
+
+
+
+	}
+
+
 
 
 }

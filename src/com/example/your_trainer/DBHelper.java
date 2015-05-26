@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -160,7 +161,7 @@ class DBHelper extends SQLiteOpenHelper
 					String exTime = listExerTimeInSec.get(j);
 					String isTabata = "0";
 
-					String sqlStr = "insert into tbExercises ('exes_name', 'exes_complid', 'exes_descr', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) values('" + exName + "', '" + String.valueOf(idCompl) +"', '" + exDescr + "',  '" + exTime + "', '" + String.valueOf(j+1) +  "',  '" + isTabata + "')";
+					String sqlStr = "insert into " +  tbExercise + " ('exes_name', 'exes_complid', 'exes_descr', 'exes_timeinsec', 'exes_order', 'exes_istabata' ) values('" + exName + "', '" + String.valueOf(idCompl) +"', '" + exDescr + "',  '" + exTime + "', '" + String.valueOf(j+1) +  "',  '" + isTabata + "')";
 					db.execSQL(sqlStr);
 
 			}
@@ -191,8 +192,24 @@ class DBHelper extends SQLiteOpenHelper
 
 	}
 
+	public void updateTime(List<AExercisContent> listOfExers, SQLiteDatabase db)
+	{
+		for (int i = 0; i <  listOfExers.size(); i++ )
+		{
+			int id = listOfExers.get(i).getId();
+			int newTime = listOfExers.get(i).getTime();
+			ContentValues cv = new ContentValues();
+			cv.put("exes_timeinsec", newTime);
+			String where = "id = ?";
+			int upCount = db.update(tbExercise, cv, where, new String[] { String.valueOf(id) });
+
+		}
+
+	}
+
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+	{
 		// TODO Auto-generated method stub
 
 	}
