@@ -137,9 +137,6 @@ class DBHelper extends SQLiteOpenHelper
 			sql = "insert into tbComplexes ('comp_name' , 'comp_folder') values ('"+ obj.getComplName() + "','" + obj.getFolderName() + "')";
 			db.execSQL(sql);
 
-
-
-
 			//2. Get id of this complex (last writed)
 			int idCompl = getIdLastComplexId(db);
 
