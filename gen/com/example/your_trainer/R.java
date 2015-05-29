@@ -1724,13 +1724,13 @@ containing a value of this type.
         public static final int submit_area=0x7f0a003f;
         public static final int tabMode=0x7f0a000c;
         public static final int title=0x7f0a002a;
-        public static final int tvAppName=0x7f0a0045;
         public static final int tvChoosedComplex=0x7f0a0047;
         public static final int tvCurrentExerName=0x7f0a004f;
         public static final int tvDescr=0x7f0a004c;
         public static final int tvExerName=0x7f0a0043;
         public static final int tvLabel=0x7f0a0054;
         public static final int tvName=0x7f0a005d;
+        public static final int tvNameApp=0x7f0a0045;
         public static final int tvPauseWord=0x7f0a0050;
         public static final int tvSettingLabel=0x7f0a001e;
         public static final int tvStatus=0x7f0a0056;
