@@ -1,7 +1,16 @@
 package com.example.your_trainer;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +32,20 @@ public class ATrainer extends Activity implements OnClickListener{
 	String choosedComplexId = null;
 	String choosedComplexFolder = null;
 
+	final int DialogAdapter = 2;
+	DBHelper dbhelper;
+	SQLiteDatabase dataBase;
+
+	List<AComplexContainer> listComplex;
+
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atrainer);
+
+        dbhelper = new DBHelper(this, "dbTrainer");
+        dataBase = dbhelper.getWritableDatabase();
 
 
         tvChoosedName = (TextView)findViewById(R.id.tvChoosedComplex);
@@ -44,7 +62,7 @@ public class ATrainer extends Activity implements OnClickListener{
         btnStart = (Button)findViewById(R.id.btnStart);
         btnStart.setOnClickListener(this);
 
-        btnStart.setEnabled(false);
+       // btnStart.setEnabled(false);
 
         btnGoSet = (Button)findViewById(R.id.btnGo2Setting);
         btnGoSet.setOnClickListener(this);
@@ -52,13 +70,8 @@ public class ATrainer extends Activity implements OnClickListener{
         btnAddCopmplex = (Button)findViewById(R.id.btnAddComplex);
         btnAddCopmplex.setOnClickListener(this);
 
-
        // btnStart.setActivated(false);
-
        // startComplexChoose();
-
-
-
 
     }
 
@@ -72,7 +85,8 @@ public class ATrainer extends Activity implements OnClickListener{
 	    		break;
 
 	    	case R.id.btnStart:
-	    		startExercice();
+	    		startComplexChoose();
+	    		//startExercice();
 	    		break;
 
 	    	case R.id.btnGo2Setting:
@@ -111,12 +125,102 @@ public class ATrainer extends Activity implements OnClickListener{
 
 	private void startComplexChoose()
     {
+		showDialog(DialogAdapter);// call dialog with return result
 
-    	// explicit call
-    	Intent intent = new Intent(this, AComplexList.class) ;
-    	startActivityForResult(intent, 13);
+		// explicit call
+    	//Intent intent = new Intent(this, AComplexList.class) ;
+    	//startActivityForResult(intent, 13);
 
     }
+
+	@Override
+	protected Dialog onCreateDialog(int id)
+	{
+		AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+		try {
+			listComplex = getComplexName();
+			AAdapter  adapter = new  AAdapter(this, listComplex);
+			adb.setAdapter(adapter, complexChooseClickListener);
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		adb.setTitle("Choose complex");
+
+		adb.setCancelable(true);
+
+		return adb.create();
+
+	}
+
+
+
+	 DialogInterface.OnClickListener complexChooseClickListener = new DialogInterface.OnClickListener()
+	 {
+
+		 @Override
+		public void onClick(DialogInterface dialog, int which)
+		    {
+		      // выводим в лог позицию нажатого элемента
+		     // Log.d(LOG_TAG, "which = " + which);
+
+		    }
+
+     };
+
+
+
+
+
+	private List<AComplexContainer> getComplexName() throws IOException
+	{
+
+		List<AComplexContainer> listOfComplex =  new ArrayList<AComplexContainer>();
+
+		String column[] = {"id", "comp_name", "comp_folder"};
+
+		Cursor c =  dataBase.query("tbComplexes", column, null, null, null, null, null);
+		int rows = c.getCount();
+
+		if (rows == 0)
+		{
+			ALog.writeLog("no rows in Database");
+			String[] noRow = {"norows"};
+			return listOfComplex;
+		}
+
+		int ColName = c.getColumnIndex("comp_name");
+		int id = c.getColumnIndex("id");
+		int ColFolder = c.getColumnIndex("comp_folder");
+		String[] arrayNameComplex = new String[rows];
+
+		// fill list of complexes
+		c.moveToFirst();
+		for (int i =0; i < rows; i++)
+		{
+
+			String name =  c.getString(ColName);
+			String folder =  c.getString(ColFolder);
+			String idCom = String.valueOf(c.getInt(id));
+
+			AComplexContainer obj = new AComplexContainer(name, idCom, folder);
+			listOfComplex.add(obj);
+
+			//arrayNameComplex[i] =  c.getString(ColName);
+			c.moveToNext();
+
+		}
+
+		c.close();
+		return listOfComplex;
+
+	}
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)

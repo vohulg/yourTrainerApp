@@ -192,6 +192,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	private void showTimer(int indexOfList)
 		{
 
+
 		// 1. get count of time, description, url, name of exercises
 
 		AExercisContent instan = listOfExer.get(indexOfList);
