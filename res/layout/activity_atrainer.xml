@@ -1,53 +1,77 @@
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    
-        
-        <LinearLayout
-        android:layout_width="match_parent"
+    android:background="#ffffff" >
+
+    <RelativeLayout
+        android:id="@+id/appName"
+        android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_gravity="center_horizontal"
-        android:background="#ffffff"
-        android:orientation="vertical" >
+        android:background="#92f2f8" >
 
         <TextView
             android:id="@+id/tvNameApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
             android:textColor="#000099"
-            android:text="Personal Trainer" />
+            android:textSize="20sp" />
+    </RelativeLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
+   <LinearLayout
+        android:id="@+id/lnLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/appName"
         android:background="#999999"
-        android:layout_width="match_parent"
-        android:layout_height="2dp">
-
+        android:orientation="horizontal" >
     </LinearLayout>
-
+    
    
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/btChooseComplex"
+    <!-- change for horizontal screen -->
+   <ImageButton
+             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Choose complex" />
+              android:layout_below="@+id/lnLine"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="84dp"            
+	        android:background="#ffffff"  
+            android:src="@drawable/btnstartgif">
+            
+        </ImageButton>
+        
+   
+   <LinearLayout
+        android:id="@+id/lnFooter"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
 
- </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnGo2Setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|clip_horizontal"
+             android:background="#ffffff"
+             android:layout_weight="1"
+            android:src="@drawable/ic_settings_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/btnAddComplex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+              android:background="#ffffff"
+              android:layout_weight="1"
+            android:src="@drawable/add_24dp" />
+
+    </LinearLayout>
+
+   <!--  
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,45 +95,52 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <Button
+        <ImageButton
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="START"
-            android:visibility="visible" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/btnGo2Setting"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Settings" />
+            android:background="#ffffff"
+            android:src="@drawable/btnstartgif">
+            
+        </ImageButton>
 
     </LinearLayout>
+    
+     <LinearLayout
+        android:orientation="horizontal"
+        android:background="#999999"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
+
+    </LinearLayout>
+
+    
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <Button
+        <ImageButton
             android:id="@+id/btnAddComplex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Add Complexes" />
+            android:layout_gravity="right"
+            android:background="#ffffff"
+            android:src="@drawable/add_24dp" />
+
+        <ImageButton
+            android:id="@+id/btnGo2Setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:background="#ffffff"
+            android:src="@drawable/ic_settings_black_24dp" />
 
     </LinearLayout>
+    
+    -->
 
-</LinearLayout>
+</RelativeLayout>

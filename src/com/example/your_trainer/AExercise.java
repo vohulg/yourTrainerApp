@@ -45,7 +45,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 	// widgets
 	 private WebView wbPictur;
-	 private TextView tvDescr;
+	// private TextView tvDescr;
 	 private TextView tvExerName;
 	 private TextView tvTimer;
 	 private LinearLayout llMain;
@@ -69,6 +69,17 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	 private MediaPlayer mplayer;
 	 AudioManager audioManager;
 
+	 @Override
+	 protected void onStop()
+	 {
+		 if (timer != null)
+		   {
+			   timer.cancel();
+
+		   }
+
+		 super.onPause();	 }
+
 
 
 
@@ -85,7 +96,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 	    	 wbPictur = (WebView)findViewById(R.id.wvImgShow);
 	    	 tvTimer = (TextView)findViewById(R.id.tvTimer);
-	    	 tvDescr = (TextView)findViewById(R.id.tvDescr);
+	    	// tvDescr = (TextView)findViewById(R.id.tvDescr);
 	    	 tvExerName = (TextView)findViewById(R.id.tvExerName);
 	    	 llMain = (LinearLayout)findViewById(R.id.llMain);
 
@@ -216,7 +227,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 		// 2. show values in widget
 		 wbPictur.loadUrl(gifPath);
-		 tvDescr.setText(descr);
+		 //tvDescr.setText(descr);
     	 tvExerName.setText(name);
 
     	 speechOut(name);

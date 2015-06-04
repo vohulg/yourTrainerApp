@@ -15,15 +15,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class ATrainer extends Activity implements OnClickListener{
 	private Button btnChooseComplex;
-	Button btnStart;
-	Button btnGoSet;
-	Button btnAddCopmplex;
+	ImageButton btnStart;
+	ImageButton btnGoSet;
+	ImageButton btnAddCopmplex;
 
 	final String LOG_TAG = "vh_tag";
 	TextView tvChoosedName;
@@ -36,7 +37,9 @@ public class ATrainer extends Activity implements OnClickListener{
 	DBHelper dbhelper;
 	SQLiteDatabase dataBase;
 
-	List<AComplexContainer> listComplex;
+	List<AComplexContainer> listComplex = null;
+
+	AAdapter  adapter;
 
 
    @Override
@@ -48,7 +51,7 @@ public class ATrainer extends Activity implements OnClickListener{
         dataBase = dbhelper.getWritableDatabase();
 
 
-        tvChoosedName = (TextView)findViewById(R.id.tvChoosedComplex);
+       // tvChoosedName = (TextView)findViewById(R.id.tvChoosedComplex);
 
         // final android.app.ActionBar bar = getActionBar();
         //bar.hide();
@@ -56,18 +59,16 @@ public class ATrainer extends Activity implements OnClickListener{
         //android.app.ActionBar actBar = getActionBar();
         //actBar.hide();
 
-        btnChooseComplex = (Button)findViewById(R.id.btChooseComplex);
-        btnChooseComplex.setOnClickListener(this);
 
-        btnStart = (Button)findViewById(R.id.btnStart);
+        btnStart = (ImageButton)findViewById(R.id.btnStart);
         btnStart.setOnClickListener(this);
 
        // btnStart.setEnabled(false);
 
-        btnGoSet = (Button)findViewById(R.id.btnGo2Setting);
+        btnGoSet = (ImageButton)findViewById(R.id.btnGo2Setting);
         btnGoSet.setOnClickListener(this);
 
-        btnAddCopmplex = (Button)findViewById(R.id.btnAddComplex);
+        btnAddCopmplex = (ImageButton)findViewById(R.id.btnAddComplex);
         btnAddCopmplex.setOnClickListener(this);
 
        // btnStart.setActivated(false);
@@ -80,9 +81,6 @@ public class ATrainer extends Activity implements OnClickListener{
     {
     	switch(v.getId())
     	{
-	    	case R.id.btChooseComplex:
-	    		startComplexChoose();
-	    		break;
 
 	    	case R.id.btnStart:
 	    		startComplexChoose();
@@ -105,8 +103,6 @@ public class ATrainer extends Activity implements OnClickListener{
 
     private void goToAddComplex()
     {
-
-
     	Intent intent1 = new Intent(this, AAddCompl.class) ;
     	startActivity(intent1);
 
@@ -126,7 +122,6 @@ public class ATrainer extends Activity implements OnClickListener{
 	private void startComplexChoose()
     {
 		showDialog(DialogAdapter);// call dialog with return result
-
 		// explicit call
     	//Intent intent = new Intent(this, AComplexList.class) ;
     	//startActivityForResult(intent, 13);
@@ -136,36 +131,76 @@ public class ATrainer extends Activity implements OnClickListener{
 	@Override
 	protected Dialog onCreateDialog(int id)
 	{
-		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-
 		try {
 			listComplex = getComplexName();
-			AAdapter  adapter = new  AAdapter(this, listComplex);
-			adb.setAdapter(adapter, complexChooseClickListener);
-
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+
+		AlertDialog.Builder adb = new AlertDialog.Builder(this);
+		adapter = new  AAdapter(this, listComplex);
+
+
+		//final AAdapter  adapter = new  AAdapter(this, listComplex);
+		adb.setAdapter(adapter, complexChooseClickListener);
+
 		adb.setTitle("Choose complex");
 
-		adb.setCancelable(true);
+		//adb.setCancelable(false);
+
+
+		adb.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+
+				adapter.setSelectedPos(which);
+			 	choosedComplexName = listComplex.get(which).getName();
+		    	 choosedComplexId = listComplex.get(which).getId();
+		    	 choosedComplexFolder = listComplex.get(which).getFolder();
+		    	 startExercice();
+
+				//int pos = adapter.getSelectedPos();
+
+			}
+
+
+		});
+
+		adb.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				//int pos = adapter.getSelectedPos();
+
+			}
+
+
+		});
+
+
 
 		return adb.create();
 
 	}
 
 
-
+     // process click in item list
 	 DialogInterface.OnClickListener complexChooseClickListener = new DialogInterface.OnClickListener()
 	 {
 
 		 @Override
 		public void onClick(DialogInterface dialog, int which)
 		    {
-		      // выводим в лог позицию нажатого элемента
-		     // Log.d(LOG_TAG, "which = " + which);
+			 	adapter.setSelectedPos(which);
+			 	choosedComplexName = listComplex.get(which).getName();
+		    	 choosedComplexId = listComplex.get(which).getId();
+		    	 choosedComplexFolder = listComplex.get(which).getFolder();
+		    	// tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);
+		    	 startExercice();
 
 		    }
 
