@@ -1,8 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:background="#ffffff"
+    android:gravity="center_horizontal" >
+    
+     <LinearLayout
+        android:id="@+id/lnHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:orientation="horizontal" 
+        android:background="#92f2f8"  >
+               
+         <ImageButton
+             android:id="@+id/ibtnStartAgain"
+             android:layout_width="5dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="9.07"
+             android:background="#92f2f8"
+             android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+        
+        <TextView
+            android:id="@+id/tvNameApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Start again"
+           android:textColor="#29959c"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+   
+   <LinearLayout
+        android:id="@+id/lnLine2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/lnHeader"
+        android:background="#999999"
+        android:orientation="horizontal" >
+   </LinearLayout>
+    
+     <LinearLayout
+        android:id="@+id/lnSuccessWord"
+        android:layout_below="@id/lnLine2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       
+        android:orientation="vertical" >
+        
+         <TextView
+             android:id="@+id/tvSecuessWord"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+              android:textColor="#29959c"
+            android:textSize="20sp"
+             android:text="COMPLEX SECUESSLY ENDED"
+             
+              />
+         
+   </LinearLayout>
+    
+     <ImageView
+         android:id="@+id/imvok"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerInParent="true"
+         android:src="@drawable/ok_150" />
+         
+    <!--  
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,4 +102,12 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ok_150" />
+        
+        -->
+
+</RelativeLayout>

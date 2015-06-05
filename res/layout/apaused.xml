@@ -11,7 +11,7 @@
         android:background="#92f2f8" >
         
          <ImageButton
-             android:id="@+id/ibtnToLeft"
+             android:id="@+id/ibtnStartAgain"
              android:layout_width="5dp"
              android:layout_height="wrap_content"
              android:layout_weight="9.07"
@@ -120,7 +120,7 @@
 			            android:layout_height="wrap_content"
 			            android:layout_weight="1"
 			            android:background="#ffffff"           
-			            android:src="@drawable/ic_done_black_48dp"
+			            android:src="@drawable/ic_play_circle_outline_black_48dp"
 		             />
 			       
 			        <ImageButton

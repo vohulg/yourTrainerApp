@@ -57,6 +57,8 @@ public class AAdapter extends BaseAdapter implements OnClickListener
 
 		}
 
+
+
 		TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
     	tvName.setText(complCont.getName());
 
