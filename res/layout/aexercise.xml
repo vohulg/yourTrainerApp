@@ -1,4 +1,8 @@
+
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff" >
@@ -29,4 +33,4 @@
               android:textSize="50sp"
               android:text="14" />
     
-    </RelativeLayout>
+    </RelativeLayout>   

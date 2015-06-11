@@ -19,8 +19,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 public class AExercise extends Activity implements OnClickListener //, TextToSpeech.OnInitListener
 {
@@ -49,6 +52,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	 private TextView tvExerName;
 	 private TextView tvTimer;
 	 private LinearLayout llMain;
+	 private RelativeLayout rlLayout;
 
 
 	 // values for timer
@@ -69,6 +73,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	 private MediaPlayer mplayer;
 	 AudioManager audioManager;
 
+	 /*
 	 @Override
 	 protected void onStop()
 	 {
@@ -78,9 +83,10 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 		   }
 
-		 super.onPause();	 }
+		 super.onPause();
 
-
+	 }
+*/
 
 
 	 @Override
@@ -94,13 +100,18 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	    	choosedComplexId = intent.getStringExtra("nameChoosedId");
 	    	choosedComplexFolder = intent.getStringExtra("nameChoosedFolder");
 
-	    	 wbPictur = (WebView)findViewById(R.id.wvImgShow);
+
+
+
+	    	wbPictur = (WebView)findViewById(R.id.wvImgShow);
 	    	 tvTimer = (TextView)findViewById(R.id.tvTimer);
 	    	// tvDescr = (TextView)findViewById(R.id.tvDescr);
 	    	 tvExerName = (TextView)findViewById(R.id.tvExerName);
-	    	 llMain = (LinearLayout)findViewById(R.id.llMain);
+	    	 rlLayout = (RelativeLayout)findViewById(R.id.rlLayout);
+	    	 rlLayout.setOnClickListener(this);
+	    	// llMain = (LinearLayout)findViewById(R.id.llMain);
 
-	    	 llMain.setOnClickListener(this);
+	    	// llMain.setOnClickListener(this);
 
 	    	 initialTTS();
 		     initialPlayer();
@@ -445,3 +456,5 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 
 
 }
+
+

@@ -155,8 +155,8 @@ public class ATrainer extends Activity implements OnClickListener{
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-
-				adapter.setSelectedPos(which);
+				which = adapter.getSelectedPos();
+				//adapter.setSelectedPos(which);
 			 	choosedComplexName = listComplex.get(which).getName();
 		    	 choosedComplexId = listComplex.get(which).getId();
 		    	 choosedComplexFolder = listComplex.get(which).getFolder();
@@ -256,7 +256,7 @@ public class ATrainer extends Activity implements OnClickListener{
 
 
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -275,6 +275,8 @@ public class ATrainer extends Activity implements OnClickListener{
     	 tvChoosedName.setText("Choosed complex is " +  choosedComplexName + " ID: " + choosedComplexId);
 
     }
+
+    */
 
    public void goToSetting()
     {
