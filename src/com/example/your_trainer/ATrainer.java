@@ -1,7 +1,6 @@
 package com.example.your_trainer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -132,7 +130,9 @@ public class ATrainer extends Activity implements OnClickListener{
 	protected Dialog onCreateDialog(int id)
 	{
 		try {
-			listComplex = getComplexName();
+
+			listComplex = Utils.getComplexName(dataBase);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -209,7 +209,7 @@ public class ATrainer extends Activity implements OnClickListener{
 
 
 
-
+/*
 	private List<AComplexContainer> getComplexName() throws IOException
 	{
 
@@ -254,7 +254,7 @@ public class ATrainer extends Activity implements OnClickListener{
 
 	}
 
-
+*/
 
 /*
     @Override

@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 //import com.example.p007_file.AExerForParsing;
@@ -28,12 +28,13 @@ public class AAddCompl extends Activity
 	private TextView tvInfo;
 	private List<AExerForParsing> list;
 
-	Button btnStartParse ;
+	ImageButton btnStartParse ;
 	String choosedFile = null;
 
 
 	 @Override
-	    protected void onCreate(Bundle savedInstanceState) {
+	    protected void onCreate(Bundle savedInstanceState)
+	 {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.newcomplex);
 
@@ -41,7 +42,7 @@ public class AAddCompl extends Activity
 
 		list = new ArrayList<AExerForParsing>();
 
-		btnStartParse = (Button)findViewById(R.id.btnStartParse);
+		btnStartParse = (ImageButton)findViewById(R.id.btnStartParse);
 
 		btnStartParse.setEnabled(false);
 

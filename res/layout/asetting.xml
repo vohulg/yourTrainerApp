@@ -1,4 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    
+     <LinearLayout
+        android:id="@+id/lnHead"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:orientation="horizontal" 
+        android:background="#92f2f8" >
+        
+         <ImageButton
+             android:id="@+id/ibtnComplete"
+             android:layout_width="5dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="10"
+             android:background="#92f2f8"
+             android:src="@drawable/ic_done_black_48dp" />
+        
+        <TextView
+            android:id="@+id/tvSettingsWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="10"
+            android:text="SETTINGS"
+           android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+    
+     
+      <LinearLayout
+        android:id="@+id/lnLine2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/lnHead"
+        android:background="#999999"
+        android:orientation="horizontal" >
+     </LinearLayout>
+    
+            <TextView
+            android:id="@+id/tvTimeWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"
+            android:layout_below="@id/lnLine2"
+             android:textColor="#821c7e"
+            android:text="Change time of exersises" />
+            
+            
+     <LinearLayout
+        android:id="@+id/lnLine3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/tvTimeWord"
+        android:background="#999999"
+        android:orientation="horizontal" >
+     </LinearLayout>
+            
+            
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical" 
+      android:layout_below="@id/lnLine3">
+
+        <ListView
+            android:id="@+id/lvExers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+        
+    </LinearLayout>
+
+</RelativeLayout>
+
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -93,3 +175,4 @@
     </LinearLayout>
 
 </LinearLayout>
+-->

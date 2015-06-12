@@ -73,7 +73,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 	 private MediaPlayer mplayer;
 	 AudioManager audioManager;
 
-	 /*
+
 	 @Override
 	 protected void onStop()
 	 {
@@ -86,7 +86,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 		 super.onPause();
 
 	 }
-*/
+
 
 
 	 @Override
