@@ -1639,15 +1639,16 @@ containing a value of this type.
         public static final int file_icon=0x7f020037;
         public static final int folder_icon=0x7f020038;
         public static final int folder_icon_light=0x7f020039;
-        public static final int ic_done_black_48dp=0x7f02003a;
-        public static final int ic_keyboard_arrow_left_black_24dp=0x7f02003b;
-        public static final int ic_launcher=0x7f02003c;
-        public static final int ic_open_in_browser_black_36dp=0x7f02003d;
-        public static final int ic_play_circle_outline_black_48dp=0x7f02003e;
-        public static final int ic_settings_black_24dp=0x7f02003f;
-        public static final int ic_skip_next_black_48dp=0x7f020040;
-        public static final int ic_skip_previous_black_48dp=0x7f020041;
-        public static final int ok_150=0x7f020042;
+        public static final int ic_delete_black_24dp=0x7f02003a;
+        public static final int ic_done_black_48dp=0x7f02003b;
+        public static final int ic_keyboard_arrow_left_black_24dp=0x7f02003c;
+        public static final int ic_launcher=0x7f02003d;
+        public static final int ic_open_in_browser_black_36dp=0x7f02003e;
+        public static final int ic_play_circle_outline_black_48dp=0x7f02003f;
+        public static final int ic_settings_black_24dp=0x7f020040;
+        public static final int ic_skip_next_black_48dp=0x7f020041;
+        public static final int ic_skip_previous_black_48dp=0x7f020042;
+        public static final int ok_150=0x7f020043;
     }
     public static final class id {
         public static final int action_bar=0x7f0a0039;
@@ -1663,11 +1664,12 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a0036;
         public static final int action_mode_bar_stub=0x7f0a0035;
         public static final int action_mode_close_button=0x7f0a0027;
-        public static final int action_settings=0x7f0a006e;
+        public static final int action_settings=0x7f0a0070;
         public static final int activity_chooser_view_content=0x7f0a0028;
         public static final int always=0x7f0a0014;
         public static final int appName=0x7f0a004a;
         public static final int beginning=0x7f0a001b;
+        public static final int btClearDb=0x7f0a006e;
         public static final int btnAddComplex=0x7f0a004f;
         public static final int btnBack=0x7f0a0047;
         public static final int btnChooseFile=0x7f0a006a;
@@ -1678,7 +1680,7 @@ containing a value of this type.
         public static final int btnPlus=0x7f0a0065;
         public static final int btnPrev=0x7f0a0056;
         public static final int btnStart=0x7f0a004c;
-        public static final int btnStartParse=0x7f0a006d;
+        public static final int btnStartParse=0x7f0a006c;
         public static final int checkbox=0x7f0a0031;
         public static final int collapseActionView=0x7f0a0015;
         public static final int currentDirectoryTextView=0x7f0a0061;
@@ -1746,13 +1748,14 @@ containing a value of this type.
         public static final int title=0x7f0a002f;
         public static final int tvBrowse=0x7f0a006b;
         public static final int tvCurrentExerName=0x7f0a0053;
+        public static final int tvDelDB=0x7f0a006f;
         public static final int tvExerName=0x7f0a0048;
         public static final int tvName=0x7f0a0063;
         public static final int tvNameApp=0x7f0a0020;
         public static final int tvPauseWord=0x7f0a0054;
         public static final int tvSecuessWord=0x7f0a0023;
         public static final int tvSettingsWord=0x7f0a005b;
-        public static final int tvStatus=0x7f0a006c;
+        public static final int tvStatus=0x7f0a006d;
         public static final int tvTimeWord=0x7f0a005c;
         public static final int tvTimer=0x7f0a0052;
         public static final int up=0x7f0a0001;

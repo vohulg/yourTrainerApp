@@ -222,7 +222,7 @@ public class AExercise extends Activity implements OnClickListener //, TextToSpe
 		// get path to folder of complex
 		String pathComplex = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + appDir + "/" + instan.getFolderPath();
 
-		String gifPath =  "file://" +  pathComplex + "/" + (indexOfList + 1) + ".gif";
+		String gifPath =  "file://" +  pathComplex + "/" + (indexOfList + 1) + ".jpg";
 
 		String html = "<html><head></head><body><img src=\""+ gifPath + "\"></body></html>";
 		//mWebView.loadData(html, "text/html","utf-8");
